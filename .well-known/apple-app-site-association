@@ -6,5 +6,8 @@
         "components": [{ "/": "/oauth-callback" }]
       }
     ]
+  },
+  "webcredentials": {
+    "apps": ["8Q67QZRUZL.asok.VezraMed"]
   }
 }
