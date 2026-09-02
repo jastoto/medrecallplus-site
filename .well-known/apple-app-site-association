@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["8Q67QZRUZL.asok.VezraMed"],
+        "components": [{ "/": "/oauth-callback" }]
+      }
+    ]
+  }
+}
