@@ -3,7 +3,10 @@
     "details": [
       {
         "appIDs": ["8Q67QZRUZL.asok.VezraMed"],
-        "components": [{ "/": "/oauth-callback" }]
+        "components": [
+          { "/": "/oauth-callback" },
+          { "/": "/bluebutton-callback" }
+        ]
       }
     ]
   },
