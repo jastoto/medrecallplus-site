@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medication List · MedRecall</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: #faf7f5; color: #2a2320;
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+header {
+  background: linear-gradient(135deg, #c0392b, #922b21);
+  color: #fff; padding: 2rem 1.5rem 1.5rem;
+}
+header .wrap { max-width: 560px; margin: 0 auto; }
+header h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+header p { margin: 0; opacity: .92; font-size: .95rem; }
+main { max-width: 560px; margin: 0 auto; padding: 1.5rem 1.5rem 2.5rem; }
+#medCard, #emptyState, #errorState {
+  background: #fff; border: 1px solid #eee0dc; border-radius: 14px;
+  padding: 1.1rem 1.25rem; color: #2a2320;
+}
+#medText {
+  margin: 0; white-space: pre-wrap; word-wrap: break-word;
+  font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+#emptyState, #errorState { color: #55494a; }
+footer {
+  max-width: 560px; margin: 0 auto; padding: 0 1.5rem 2.5rem;
+  color: #9a8f8a; font-size: .78rem; line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Medication List</h1>
+    <p>Shared from MedRecall — a personal health record app</p>
+  </div>
+</header>
+<main>
+  <div id="medCard" hidden><pre id="medText"></pre></div>
+  <div id="emptyState" hidden>No data was included in this link.</div>
+  <div id="errorState" hidden>This link's content couldn't be read. Ask for a new QR code or link.</div>
+</main>
+<footer>
+  Nothing on this page was sent to or stored on any server — the entire list is embedded in the link itself and decoded right here in your browser. This is not medical advice; confirm any changes with the patient's doctor or pharmacist.
+</footer>
+<script>
+(function () {
+  function base64UrlDecode(str) {
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (str.length % 4) { str += '='; }
+    var binary = atob(str);
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; i++) { bytes[i] = binary.charCodeAt(i); }
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
+  var hash = window.location.hash.slice(1);
+  var medCard = document.getElementById('medCard');
+  var medText = document.getElementById('medText');
+  var emptyState = document.getElementById('emptyState');
+  var errorState = document.getElementById('errorState');
+
+  if (!hash) {
+    emptyState.hidden = false;
+    return;
+  }
+
+  var text;
+  try {
+    text = base64UrlDecode(hash);
+  } catch (e) {
+    errorState.hidden = false;
+    return;
+  }
+
+  if (!text.trim()) {
+    emptyState.hidden = false;
+    return;
+  }
+
+  medText.textContent = text;
+  medCard.hidden = false;
+})();
+</script>
+</body>
+</html>
