@@ -5,7 +5,8 @@
         "appIDs": ["8Q67QZRUZL.asok.VezraMed"],
         "components": [
           { "/": "/oauth-callback" },
-          { "/": "/bluebutton-callback" }
+          { "/": "/bluebutton-callback" },
+          { "/": "/onedrive-callback" }
         ]
       }
     ]
