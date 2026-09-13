@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Access · MedRecall</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: #faf7f5; color: #2a2320;
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+header {
+  background: linear-gradient(135deg, #c0392b, #922b21);
+  color: #fff; padding: 2.5rem 1.5rem 2rem;
+}
+header .wrap { max-width: 720px; margin: 0 auto; }
+header h1 { margin: 0 0 .25rem; font-size: 1.9rem; }
+header p { margin: 0; opacity: .92; }
+nav { max-width: 720px; margin: 1rem auto 0; padding: 0 1.5rem; }
+nav a {
+  color: #922b21; text-decoration: none; font-weight: 600; margin-right: 1.5rem;
+}
+nav a:hover { text-decoration: underline; }
+main { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+h2 { font-size: 1.15rem; color: #922b21; margin-top: 2rem; }
+p { margin: .6rem 0; }
+ul { padding-left: 1.3rem; }
+li { margin: .4rem 0; }
+.meta { color: #7a6f6a; font-size: .9rem; margin-bottom: 1.5rem; }
+.card {
+  background: #fff; border: 1px solid #eee0dc; border-radius: 14px;
+  padding: 1.25rem 1.4rem; margin: 1rem 0;
+}
+.card h3 { margin: 0 0 .4rem; font-size: 1rem; color: #2a2320; }
+.card p { margin: 0; color: #5b5450; }
+.res-row {
+  display: flex; gap: .9rem; padding: .7rem 0; border-bottom: 1px solid #f1e6e2;
+}
+.res-row:last-child { border-bottom: none; }
+.res-row code {
+  flex: 0 0 auto; background: #f6ece9; color: #922b21; border-radius: 6px;
+  padding: .15rem .45rem; font-size: .82rem; height: fit-content;
+}
+.res-row span { color: #5b5450; }
+.tech-table { background: #fff; border: 1px solid #eee0dc; border-radius: 14px; overflow: hidden; }
+.tech-row { display: flex; gap: 1rem; padding: .7rem 1.1rem; border-bottom: 1px solid #f1e6e2; font-size: .92rem; }
+.tech-row:last-child { border-bottom: none; }
+.tech-row .k { flex: 0 0 150px; color: #7a6f6a; font-weight: 600; }
+.tech-row .v { color: #2a2320; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .85rem; word-break: break-word; }
+footer {
+  max-width: 720px; margin: 0 auto; padding: 1rem 1.5rem 3rem;
+  color: #7a6f6a; font-size: .85rem;
+}
+footer a { color: #922b21; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>MedRecall</h1>
+    <p>Your Medicare, hospital, and health records — organized on your own device.</p>
+  </div>
+</header>
+<nav><a href="index.html">Home</a> <a href="privacy-policy.html">Privacy Policy</a> <a href="terms-of-service.html">Terms of Service</a> <a href="data-access.html" style="text-decoration:underline">Data Access</a> <a href="disclosures.html">Disclosures</a></nav>
+<main>
+<p class="meta">Last updated September 13, 2026</p>
+<p>MedRecall is a personal app that helps one patient keep track of their own doctors, medications, conditions, and visit notes. This page explains, in plain language, what happens when you connect MedRecall to your hospital or health system's patient portal.</p>
+
+<h2>You authorize it. You see it. It stays yours.</h2>
+<p>When you choose to connect a hospital or health system to MedRecall, you're sent to <strong>your own health system's real login page</strong> — never a page built or hosted by MedRecall — where you sign in and approve exactly what MedRecall may read. This uses SMART on FHIR, the open, industry-standard authorization framework built for this purpose and used across the healthcare industry. MedRecall never sees or stores your portal username or password.</p>
+<p>Once approved, MedRecall reads your records directly into the app on your own iPhone, so they sit alongside the doctors, medications, and notes you've already entered yourself.</p>
+
+<h2>What MedRecall requests</h2>
+<p>MedRecall requests read-only access to standard clinical data categories (part of the US Core Data for Interoperability, USCDI) — nothing outside what's needed to give you a fuller picture of your own care:</p>
+<div class="card">
+  <div class="res-row"><code>Patient</code><span><strong>Demographics</strong> — name, date of birth, and contact details already on file with your provider.</span></div>
+  <div class="res-row"><code>Condition</code><span><strong>Diagnoses &amp; problems</strong> — the conditions your care team has documented.</span></div>
+  <div class="res-row"><code>MedicationRequest</code><span><strong>Prescriptions</strong> — medications your providers have ordered.</span></div>
+  <div class="res-row"><code>AllergyIntolerance</code><span><strong>Allergies &amp; reactions</strong> on file with your provider.</span></div>
+  <div class="res-row"><code>Observation</code><span><strong>Labs &amp; vitals</strong> — results and readings such as blood pressure, glucose, and lab panels.</span></div>
+  <div class="res-row"><code>Immunization</code><span><strong>Vaccination history</strong> recorded by your provider.</span></div>
+</div>
+
+<h2>How your data is handled</h2>
+<div class="card">
+  <h3>Stays on your device</h3>
+  <p>Records pulled from your health system are stored on your iPhone, the same way the data you type into MedRecall already is.</p>
+</div>
+<div class="card">
+  <h3>Your backup, your choice</h3>
+  <p>If you turn on backups, they go to a Google Drive or Files folder you control — never to a MedRecall-run server, because there isn't one.</p>
+</div>
+<div class="card">
+  <h3>Never sold, never shared</h3>
+  <p>Nothing is sold, shared with advertisers, or used to train anything. There's no analytics vendor watching what you read.</p>
+</div>
+<div class="card">
+  <h3>Revocable anytime</h3>
+  <p>Disconnect a health system from your provider's own patient-portal privacy settings at any time — access ends immediately, on their side, not just ours.</p>
+</div>
+
+<h2>Technical reference</h2>
+<p>Registration details for connecting MedRecall as a patient-facing SMART on FHIR application:</p>
+<div class="tech-table">
+  <div class="tech-row"><div class="k">Application type</div><div class="v">Patient-facing, public client</div></div>
+  <div class="tech-row"><div class="k">Redirect URI</div><div class="v">https://medrecallplus.com/oauth-callback</div></div>
+  <div class="tech-row"><div class="k">Authorization flow</div><div class="v">OAuth 2.0 Authorization Code with PKCE</div></div>
+  <div class="tech-row"><div class="k">Data scope</div><div class="v">USCDI-covered US Core resources, read-only</div></div>
+  <div class="tech-row"><div class="k">Launch context</div><div class="v">Standalone launch</div></div>
+</div>
+</main>
+<footer>
+  &copy; 2026 MedRecall. Questions about this app or how it handles your data? <a href="mailto:asok4fam@gmail.com">asok4fam@gmail.com</a>
+</footer>
+</body>
+</html>
