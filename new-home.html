@@ -212,6 +212,21 @@
   .phone-caption { text-align: center; font-size: .78rem; color: var(--text-muted); margin-top: 14px; font-style: italic; font-family: var(--serif); }
   .ekg-divider { color: var(--border); opacity: .8; margin-top: clamp(28px, 5vw, 52px); overflow: hidden; }
 
+  /* ---------- Demo video ---------- */
+  .demo { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .demo-wrap { display: grid; grid-template-columns: 1fr .78fr; gap: clamp(28px, 5vw, 56px); align-items: center; padding-block: clamp(44px, 7vw, 76px); }
+  .demo-copy h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 10px; }
+  .demo-copy p { margin-top: 14px; color: var(--text-muted); font-size: 1.02rem; line-height: 1.6; max-width: 44ch; }
+  .demo-video-wrap { display: flex; justify-content: center; }
+  .demo-video {
+    width: min(280px, 100%);
+    aspect-ratio: 640 / 1138;
+    border-radius: 26px;
+    background: #000;
+    box-shadow: var(--shadow);
+    display: block;
+  }
+
   /* ---------- Trust strip ---------- */
   .trust { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
   .trust .wrap { padding-block: clamp(40px, 6vw, 60px); }
@@ -288,7 +303,7 @@
   .screen-frame {
     border-radius: 12px;
     background: #0A161B;
-    aspect-ratio: 4/5;
+    aspect-ratio: 1206 / 2622;
     overflow: hidden;
   }
   .screen-shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
@@ -330,6 +345,8 @@
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; }
     .phone-stage { order: -1; }
+    .demo-wrap { grid-template-columns: 1fr; }
+    .demo-video-wrap { order: -1; }
     .trust-cols { grid-template-columns: 1fr; }
     .feature-grid { grid-template-columns: repeat(2, 1fr); }
     .feature.spotlight { grid-column: span 2; }
@@ -411,6 +428,22 @@
     </svg>
   </div>
 </header>
+
+<section class="demo" id="demo">
+  <div class="wrap demo-wrap">
+    <div class="demo-copy">
+      <div class="kicker">See it in action</div>
+      <h2>Under a minute, start to finish.</h2>
+      <p>A quick walkthrough of adding a doctor, logging a medication, and pulling up the Medical ID card — all without ever leaving your phone.</p>
+    </div>
+    <div class="demo-video-wrap">
+      <video class="demo-video" controls preload="metadata" poster="shots/demo-poster.jpg" playsinline>
+        <source src="shots/demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video — the file is at shots/demo.mp4.
+      </video>
+    </div>
+  </div>
+</section>
 
 <section class="trust" id="privacy">
   <div class="wrap">
