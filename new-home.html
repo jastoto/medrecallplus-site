@@ -97,7 +97,7 @@
   }
   .nav-links a:hover { color: var(--text); }
   .nav-links a.btn-primary,
-  .nav-links a.btn-primary:hover { color: #000000; }
+  .nav-links a.btn-primary:hover { color: #FFFFFF; }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -205,36 +205,10 @@
   .phone-screen {
     height: 100%;
     border-radius: 30px;
-    background: linear-gradient(200deg, #163640 0%, #0B171B 100%);
-    padding: 30px 16px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    background: #0B171B;
+    overflow: hidden;
   }
-  .phone-title { font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: 2px; }
-  .phone-card {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 12px;
-    padding: 10px 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .phone-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-  .phone-lines { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
-  .phone-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,.28); }
-  .phone-line.short { width: 46%; background: rgba(255,255,255,.16); }
-  .phone-pulse {
-    margin-top: auto;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.08);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-  }
+  .phone-shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   .phone-caption { text-align: center; font-size: .78rem; color: var(--text-muted); margin-top: 14px; font-style: italic; font-family: var(--serif); }
   .ekg-divider { color: var(--border); opacity: .8; margin-top: clamp(28px, 5vw, 52px); overflow: hidden; }
 
@@ -313,17 +287,11 @@
   }
   .screen-frame {
     border-radius: 12px;
-    background: linear-gradient(165deg, #1B3B44, #0A161B 85%);
-    padding: 16px;
+    background: #0A161B;
     aspect-ratio: 4/5;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    overflow: hidden;
   }
-  .screen-frame .row { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); border-radius: 9px; padding: 8px 10px; }
-  .screen-frame .row .sw { width: 8px; height: 8px; border-radius: 50%; flex: none; }
-  .screen-frame .row .ln { height: 5px; border-radius: 3px; background: rgba(255,255,255,.26); flex: 1; }
-  .screen-frame .row .ln.s { flex: none; width: 30%; background: rgba(255,255,255,.15); }
+  .screen-shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   .screen-label { margin-top: 14px; font-weight: 600; font-size: .95rem; }
   .screen-desc { margin-top: 4px; font-size: .85rem; color: var(--text-muted); line-height: 1.5; }
   .screens-note { margin-top: 22px; font-size: .82rem; color: var(--text-muted); font-style: italic; font-family: var(--serif); text-align: center; }
@@ -421,22 +389,7 @@
           </svg>
           <div class="phone">
             <div class="phone-screen">
-              <div class="phone-title">Medications</div>
-              <div class="phone-card">
-                <span class="phone-dot" style="background:#34C9B4"></span>
-                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-              </div>
-              <div class="phone-card">
-                <span class="phone-dot" style="background:#6DB6DE"></span>
-                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-              </div>
-              <div class="phone-card">
-                <span class="phone-dot" style="background:#E8B84B"></span>
-                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-              </div>
-              <div class="phone-pulse">
-                <svg width="100%" height="20" viewBox="0 0 220 20" fill="none"><path d="M0 10 H60 L72 10 L80 2 L90 18 L100 10 L110 10 L118 4 L126 16 L134 10 H220" stroke="#34C9B4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
-              </div>
+              <img class="phone-shot" src="shots/home.png" alt="MedRecall Home screen, showing the Record Visit, Doctors, Medications, Vitals, Health, Conditions, Reports, Medical ID and Calendar tiles">
             </div>
           </div>
           <svg class="pill-cluster" viewBox="0 0 100 60" fill="none">
@@ -448,7 +401,7 @@
             <circle cx="86" cy="41" r="9" fill="var(--accent2-strong)"/>
           </svg>
         </div>
-        <p class="phone-caption">Illustrative — actual screens shown in "Inside the app"</p>
+        <p class="phone-caption">The actual Home screen — straight from the TestFlight build</p>
       </div>
     </div>
   </div>
@@ -554,36 +507,22 @@
     </div>
     <div class="screens-row">
       <div class="screen-card">
-        <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#6DB6DE"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#E8B84B"></span><span class="ln"></span><span class="ln s"></span></div>
-        </div>
+        <div class="screen-frame"><img class="screen-shot" src="shots/home.png" alt="MedRecall Home screen with the full tile grid"></div>
         <div class="screen-label">Home</div>
         <div class="screen-desc">One glance at what's due, what's upcoming, and quick links to everything else.</div>
       </div>
       <div class="screen-card">
-        <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#6DB6DE"></span><span class="ln"></span></div>
-          <div class="row" style="opacity:.7"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
-          <div class="row" style="opacity:.5"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
-          <div class="row" style="opacity:.35"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
-        </div>
-        <div class="screen-label">Doctors</div>
-        <div class="screen-desc">Every provider, their upcoming appointments, and the notes tied to each visit.</div>
-      </div>
-      <div class="screen-card">
-        <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#E8B84B"></span><span class="ln"></span><span class="ln s"></span></div>
-        </div>
+        <div class="screen-frame"><img class="screen-shot" src="shots/medications.png" alt="MedRecall Medications screen"></div>
         <div class="screen-label">Medications</div>
         <div class="screen-desc">Dose, schedule and a mark-as-taken log at a glance, color-coded per prescription.</div>
       </div>
+      <div class="screen-card">
+        <div class="screen-frame"><img class="screen-shot" src="shots/medicalid.png" alt="MedRecall Medical ID screen"></div>
+        <div class="screen-label">Medical ID</div>
+        <div class="screen-desc">An emergency card — allergies, conditions and medications — ready without unlocking the rest of the app.</div>
+      </div>
     </div>
-    <p class="screens-note">Layouts shown are illustrative of the app's structure, not literal screen captures.</p>
+    <p class="screens-note">Real screens from the current TestFlight build. Names and details shown are placeholder test data.</p>
   </div>
 </section>
 
