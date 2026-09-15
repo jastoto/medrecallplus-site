@@ -1,86 +1,589 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home · MedRecall</title>
+<title>MedRecall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root { color-scheme: light; }
-* { box-sizing: border-box; }
-body {
-  margin: 0; background: #faf7f5; color: #2a2320;
-  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-header {
-  background: linear-gradient(135deg, #c0392b, #922b21);
-  color: #fff; padding: 2.5rem 1.5rem 2rem;
-}
-header .wrap { max-width: 720px; margin: 0 auto; }
-header h1 { margin: 0 0 .25rem; font-size: 1.9rem; }
-header p { margin: 0; opacity: .92; }
-nav { max-width: 720px; margin: 1rem auto 0; padding: 0 1.5rem; }
-nav a {
-  color: #922b21; text-decoration: none; font-weight: 600; margin-right: 1.5rem;
-}
-nav a:hover { text-decoration: underline; }
-main { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
-h2 { font-size: 1.15rem; color: #922b21; margin-top: 2rem; }
-p { margin: .6rem 0; }
-ul { padding-left: 1.3rem; }
-li { margin: .4rem 0; }
-.meta { color: #7a6f6a; font-size: .9rem; margin-bottom: 1.5rem; }
-.card {
-  background: #fff; border: 1px solid #eee0dc; border-radius: 14px;
-  padding: 1.25rem 1.4rem; margin: 1rem 0;
-}
-footer {
-  max-width: 720px; margin: 0 auto; padding: 1rem 1.5rem 3rem;
-  color: #7a6f6a; font-size: .85rem;
-}
-footer a { color: #922b21; }
-a.button {
-  display: inline-block; background: #922b21; color: #fff; text-decoration: none;
-  padding: .6rem 1.1rem; border-radius: 10px; font-weight: 600; margin-top: .5rem;
-}
+  /* ---------- Tokens ---------- */
+  :root {
+    --bg: #F8FBFB;
+    --bg-grad-end: #E9F4F3;
+    --surface: #FFFFFF;
+    --surface-2: #EEF6F6;
+    --border: #DCE9E9;
+    --text: #132226;
+    --text-muted: #55707A;
+    --accent: #276F9E;
+    --accent-strong: #1C5680;
+    --accent-ink: #FFFFFF;
+    --accent2: #12897C;
+    --accent2-strong: #0D6C62;
+    --accent2-ink: #FFFFFF;
+    --shadow: 0 1px 2px rgba(19,34,38,.06), 0 12px 32px -16px rgba(19,34,38,.18);
+    --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  /* This page stays light by default regardless of system dark mode —
+     matching the rest of medrecallplus.com. It only goes dark if the
+     viewer has explicitly chosen dark mode for Claude itself. */
+  :root[data-theme="dark"] {
+    --bg: #0C1A20;
+    --bg-grad-end: #143138;
+    --surface: #12272E;
+    --surface-2: #183036;
+    --border: #274046;
+    --text: #EAF4F4;
+    --text-muted: #9AB6BC;
+    --accent: #6DB6DE;
+    --accent-strong: #8FCBEA;
+    --accent-ink: #0C1A20;
+    --accent2: #34C9B4;
+    --accent2-strong: #59E0CC;
+    --accent2-ink: #0C1A20;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 20px 48px -20px rgba(0,0,0,.55);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+  section { padding-block: clamp(56px, 9vw, 108px); }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 16px;
+  }
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    letter-spacing: .01em;
+  }
+  .wordmark .dot { color: var(--accent2); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: .93rem;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.btn-primary,
+  .nav-links a.btn-primary:hover { color: #FFFFFF; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .92rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: var(--accent-strong); }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-block: clamp(48px, 8vw, 88px) clamp(40px, 7vw, 72px);
+    background: linear-gradient(175deg, var(--bg) 0%, var(--bg-grad-end) 100%);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: color-mix(in srgb, var(--accent2) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent2) 30%, transparent);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .eyebrow::before { content: "●"; font-size: .55rem; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 4.6vw, 3.65rem);
+    line-height: 1.05;
+    margin-top: 20px;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    margin-top: 22px;
+    font-size: 1.14rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 46ch;
+  }
+  .hero-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+  .hero-note {
+    margin-top: 16px;
+    font-size: .84rem;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* ---------- Phone illustration ---------- */
+  .phone-stage { display: flex; justify-content: center; }
+  .phone-rig { position: relative; }
+  .stetho {
+    position: absolute;
+    top: -34px; left: 50%;
+    transform: translateX(-72%);
+    width: 235px; height: auto;
+    z-index: 0;
+    color: var(--accent2);
+    opacity: .8;
+    pointer-events: none;
+  }
+  .pill-cluster {
+    position: absolute;
+    bottom: -18px; right: -22px;
+    width: 92px; height: auto;
+    z-index: 2;
+    filter: drop-shadow(0 8px 14px rgba(12,26,32,.25));
+  }
+  .phone {
+    width: min(300px, 100%);
+    aspect-ratio: 9 / 18.5;
+    border-radius: 42px;
+    padding: 12px;
+    background: linear-gradient(160deg, #1B3B44, #0A161B 78%);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1;
+  }
+  .phone::after {
+    content: "";
+    position: absolute;
+    top: 22px; left: 50%; transform: translateX(-50%);
+    width: 58px; height: 6px; border-radius: 4px;
+    background: rgba(255,255,255,.18);
+  }
+  .phone-screen {
+    height: 100%;
+    border-radius: 30px;
+    background: #0B171B;
+    overflow: hidden;
+  }
+  .phone-shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .phone-caption { text-align: center; font-size: .78rem; color: var(--text-muted); margin-top: 14px; font-style: italic; font-family: var(--serif); }
+  .ekg-divider { color: var(--border); opacity: .8; margin-top: clamp(28px, 5vw, 52px); overflow: hidden; }
+
+  /* ---------- Demo video ---------- */
+  .demo { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .demo-wrap { display: grid; grid-template-columns: 1fr .78fr; gap: clamp(28px, 5vw, 56px); align-items: center; padding-block: clamp(44px, 7vw, 76px); }
+  .demo-copy h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 10px; }
+  .demo-copy p { margin-top: 14px; color: var(--text-muted); font-size: 1.02rem; line-height: 1.6; max-width: 44ch; }
+  .demo-video-wrap { display: flex; justify-content: center; }
+  .demo-video {
+    width: min(280px, 100%);
+    aspect-ratio: 640 / 1138;
+    border-radius: 26px;
+    background: #000;
+    box-shadow: var(--shadow);
+    display: block;
+  }
+
+  /* ---------- Trust strip ---------- */
+  .trust { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
+  .trust .wrap { padding-block: clamp(40px, 6vw, 60px); }
+  .trust-head { max-width: 62ch; }
+  .trust-head .kicker { font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .trust-head h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 10px; }
+  .trust-cols {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .trust-col { display: flex; gap: 14px; }
+  .trust-icon {
+    flex: none;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .trust-col h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; }
+  .trust-col p { margin-top: 6px; font-size: .92rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* ---------- Features ---------- */
+  .section-head { max-width: 60ch; margin-inline: auto; text-align: center; }
+  .section-head .kicker { font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent2); }
+  .section-head h2 { font-size: clamp(1.9rem, 3.4vw, 2.5rem); margin-top: 10px; }
+  .section-head p { margin-top: 14px; color: var(--text-muted); font-size: 1.02rem; line-height: 1.6; }
+
+  .feature-grid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .feature {
+    background: var(--surface);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .feature-icon {
+    width: 34px; height: 34px;
+    color: var(--accent);
+  }
+  .feature h3 { font-family: var(--sans); font-weight: 600; font-size: 1.02rem; }
+  .feature p { font-size: .89rem; color: var(--text-muted); line-height: 1.55; }
+  .feature.spotlight { background: linear-gradient(165deg, var(--accent) 0%, var(--accent-strong) 100%); color: var(--accent-ink); grid-column: span 2; }
+  .feature.spotlight .feature-icon { color: var(--accent-ink); }
+  .feature.spotlight p { color: color-mix(in srgb, var(--accent-ink) 82%, transparent); }
+  .feature.spotlight h3 { color: var(--accent-ink); }
+
+  /* ---------- Screens ---------- */
+  .screens-band { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .screens-row {
+    margin-top: 46px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .screen-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .screen-frame {
+    border-radius: 12px;
+    background: #0A161B;
+    aspect-ratio: 1206 / 2622;
+    overflow: hidden;
+  }
+  .screen-shot { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .screen-label { margin-top: 14px; font-weight: 600; font-size: .95rem; }
+  .screen-desc { margin-top: 4px; font-size: .85rem; color: var(--text-muted); line-height: 1.5; }
+  .screens-note { margin-top: 22px; font-size: .82rem; color: var(--text-muted); font-style: italic; font-family: var(--serif); text-align: center; }
+
+  /* ---------- Download ---------- */
+  .download {
+    background: linear-gradient(175deg, var(--bg) 0%, var(--bg-grad-end) 100%);
+    text-align: center;
+  }
+  .download h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); max-width: 26ch; margin-inline: auto; }
+  .download p { margin-top: 16px; color: var(--text-muted); font-size: 1.05rem; max-width: 48ch; margin-inline: auto; line-height: 1.6; }
+  .download-cta { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .download-cta .btn { padding: 13px 26px; font-size: .96rem; }
+  .platform-row { margin-top: 26px; display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; font-family: var(--mono); font-size: .78rem; color: var(--text-muted); }
+  .platform-row span { display: inline-flex; align-items: center; gap: 7px; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .status-dot.live { background: var(--accent2); }
+  .status-dot.soon { background: var(--text-muted); }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--border); }
+  .footer-row {
+    padding-block: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .footer-links a { text-decoration: none; color: var(--text-muted); font-size: .87rem; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: .82rem; color: var(--text-muted); font-family: var(--mono); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .phone-stage { order: -1; }
+    .demo-wrap { grid-template-columns: 1fr; }
+    .demo-video-wrap { order: -1; }
+    .trust-cols { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .feature.spotlight { grid-column: span 2; }
+    .screens-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 480px) {
+    .feature-grid { grid-template-columns: 1fr; }
+    .feature.spotlight { grid-column: span 1; }
+    .stetho { width: 170px; transform: translateX(-62%); top: -20px; }
+    .pill-cluster { width: 70px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { animation: rise .6s ease both; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
-</head>
-<body>
-<header>
-  <div class="wrap">
-    <h1>MedRecall</h1>
-    <p>Your Medicare, hospital, and health records — organized on your own device.</p>
+
+<nav class="nav">
+  <div class="wrap nav-row">
+    <div class="wordmark">MedRecall<span class="dot">.</span></div>
+    <div class="nav-links">
+      <a href="#privacy">Privacy-first</a>
+      <a href="#features">Features</a>
+      <a href="#screens">Inside the app</a>
+      <a href="#download" class="btn btn-primary">Get the beta</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Zero-knowledge · iOS</span>
+      <h1>Your medical history, <em>kept where it belongs</em> — on your phone.</h1>
+      <p class="hero-sub">MedRecall tracks your medications, doctors, conditions and vitals, and pulls your Medicare claims straight from CMS Blue Button&nbsp;2.0 — without ever sending your records to a server. There isn't one.</p>
+      <div class="hero-cta">
+        <a href="#download" class="btn btn-primary">Get the TestFlight beta</a>
+        <a href="#privacy" class="btn btn-ghost">How the privacy works</a>
+      </div>
+      <p class="hero-note">// on-device storage · Keychain-secured tokens · no account required</p>
+    </div>
+    <div class="phone-stage reveal">
+      <div>
+        <div class="phone-rig">
+          <svg class="stetho" viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="55" cy="16" r="10" fill="currentColor" stroke="none"/>
+            <circle cx="145" cy="16" r="10" fill="currentColor" stroke="none"/>
+            <path d="M55,26 C48,55 55,78 82,92 C96,100 102,108 102,124"/>
+            <path d="M145,26 C152,55 145,78 118,92 C104,100 98,108 98,124"/>
+            <path d="M100,124 L100,168"/>
+            <path d="M100,168 C100,182 90,190 78,190 C64,190 54,180 54,166 L54,150"/>
+            <circle cx="54" cy="146" r="9"/>
+            <circle cx="78" cy="222" r="34" stroke-width="7"/>
+            <circle cx="78" cy="222" r="14" stroke-width="4"/>
+          </svg>
+          <div class="phone">
+            <div class="phone-screen">
+              <img class="phone-shot" src="shots/home.png" alt="MedRecall Home screen, showing the Record Visit, Doctors, Medications, Vitals, Health, Conditions, Reports, Medical ID and Calendar tiles">
+            </div>
+          </div>
+          <svg class="pill-cluster" viewBox="0 0 100 60" fill="none">
+            <g transform="rotate(-18 30 26)">
+              <rect x="6" y="14" width="48" height="24" rx="12" fill="var(--accent2)"/>
+              <path d="M30 14 H42 a12 12 0 0 1 0 24 H30 Z" fill="var(--accent)"/>
+            </g>
+            <circle cx="76" cy="18" r="11" fill="var(--accent)"/>
+            <circle cx="86" cy="41" r="9" fill="var(--accent2-strong)"/>
+          </svg>
+        </div>
+        <p class="phone-caption">The actual Home screen — straight from the TestFlight build</p>
+      </div>
+    </div>
+  </div>
+  <div class="ekg-divider" aria-hidden="true">
+    <svg preserveAspectRatio="none" viewBox="0 0 800 40" width="100%" height="40">
+      <path d="M0,20 H140 L158,20 L168,4 L180,36 L192,20 L210,20 L222,10 L234,30 L246,20 H800" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </header>
-<nav><a href="index.html" style="text-decoration:underline">Home</a> <a href="privacy-policy.html">Privacy Policy</a> <a href="terms-of-service.html">Terms of Service</a> <a href="data-access.html">Data Access</a> <a href="disclosures.html">Disclosures</a></nav>
-<main>
 
-<div class="card">
-  <p><strong>MedRecall</strong> is a personal health record app for iOS. Connect your own Medicare claims
-  (via CMS's Blue Button 2.0 API), hospital patient portal records (via Epic on FHIR), and Apple Health
-  data to see everything in one place.</p>
-  <p>Every record stays on your device — MedRecall does not operate a backend server, and nothing you
-  connect is sold or shared with third parties for marketing.</p>
-</div>
+<section class="demo" id="demo">
+  <div class="wrap demo-wrap">
+    <div class="demo-copy">
+      <div class="kicker">See it in action</div>
+      <h2>Under a minute, start to finish.</h2>
+      <p>A quick walkthrough of adding a doctor, logging a medication, and pulling up the Medical ID card — all without ever leaving your phone.</p>
+    </div>
+    <div class="demo-video-wrap">
+      <video class="demo-video" controls preload="metadata" poster="shots/demo-poster.jpg" playsinline>
+        <source src="shots/demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video — the file is at shots/demo.mp4.
+      </video>
+    </div>
+  </div>
+</section>
 
-<h2>What MedRecall does</h2>
-<ul>
-  <li>Pulls in your Medicare Part A/B/D claims history directly from Medicare, with your authorization.</li>
-  <li>Connects to participating hospital patient portals to import visit notes, conditions, and medications.</li>
-  <li>Brings in health metrics you choose to share from Apple Health.</li>
-  <li>Records and summarizes doctor visits, entirely on-device, using Apple's on-device AI (Apple Intelligence) — no transcript ever leaves your phone.</li>
-  <li>Builds shareable PDF reports — visit history, medications, a health summary for a new doctor, and more.</li>
-</ul>
+<section class="trust" id="privacy">
+  <div class="wrap">
+    <div class="trust-head">
+      <div class="kicker">The architecture is the pitch</div>
+      <h2>No backend means no breach to worry about.</h2>
+    </div>
+    <div class="trust-cols">
+      <div class="trust-col">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.6-3 8.2-7 9-4-.8-7-4.4-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10" /></svg>
+        </div>
+        <div>
+          <h3>Everything stays on-device</h3>
+          <p>Doctors, medications, visit notes and vitals are stored locally on your iPhone — MedRecall has no patient database to secure, and nothing to lose in a breach.</p>
+        </div>
+      </div>
+      <div class="trust-col">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <div>
+          <h3>Keychain-secured access</h3>
+          <p>Medicare Blue Button 2.0 sign-in uses PKCE with no client secret stored anywhere, and tokens live in iOS Keychain — the same vault iOS uses for passwords.</p>
+        </div>
+      </div>
+      <div class="trust-col">
+        <div class="trust-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg>
+        </div>
+        <div>
+          <h3>You choose your own backup</h3>
+          <p>Back up to iCloud, Google Drive or OneDrive — or don't. Backups are opt-in and go to storage you already control, never to a MedRecall server.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>Learn more</h2>
-<p>
-  <a class="button" href="privacy-policy.html">Read the Privacy Policy</a>
-  &nbsp;
-  <a class="button" href="terms-of-service.html">Read the Terms of Service</a>
-</p>
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">What's inside</div>
+      <h2>One place for everything a visit generates.</h2>
+      <p>Built around how a real medical history actually accumulates — across doctors, prescriptions, and years of appointments.</p>
+    </div>
 
-</main>
+    <div class="feature-grid">
+      <div class="feature spotlight">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 0 1 16 0"/><path d="M4 12v3a2 2 0 0 0 2 2h1v-6H6a2 2 0 0 0-2 2z"/><path d="M20 12v3a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2z"/><path d="M12 17v2a2 2 0 0 0 4 0"/></svg>
+        <h3>Medicare Blue Button 2.0 import</h3>
+        <p>Connect your Medicare account and MedRecall pulls your claims history directly from CMS — no retyping years of visits by hand.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="9" height="18" rx="4" transform="rotate(20 10.5 12)"/><path d="M7.5 12l7-3"/></svg>
+        <h3>Medications &amp; dose log</h3>
+        <p>Dosage, schedule and a "mark as taken" log per medication, with recurring reminders tied to the exact prescription.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg>
+        <h3>Doctors &amp; visits</h3>
+        <p>Every provider in one directory, with appointments, follow-ups and recorded visit notes attached to the right doctor.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 13.5a8.4 8.4 0 1 1-4.2-7.3"/><path d="M20 4v5h-5"/></svg>
+        <h3>Conditions &amp; vitals</h3>
+        <p>Track ongoing conditions alongside blood pressure, weight and other vitals, linked back to the visits that mention them.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h13l3 3v13H4z"/><path d="M8 4v5h7V4"/><path d="M8 13h8M8 16.5h5"/></svg>
+        <h3>Reports, ready to hand over</h3>
+        <p>Generate a clean PDF by doctor, medication, condition or date range — built for the next appointment or a new provider.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="6" width="17" height="13" rx="2.5"/><path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6"/><path d="M8.5 13.2l2.1 2.1 4.4-4.6"/></svg>
+        <h3>Medical ID</h3>
+        <p>A single emergency card — allergies, conditions and medications — ready to show without unlocking the rest of the app.</p>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h9"/><circle cx="19" cy="18" r="2"/></svg>
+        <h3>Ask MedRecall</h3>
+        <p>An on-device assistant that searches across your doctors, medications and notes to answer plain-language questions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screens-band" id="screens">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Inside the app</div>
+      <h2>Familiar structure, none of the clutter.</h2>
+      <p>A flat, five-tab layout instead of the nested menus most patient-portal apps bury you in.</p>
+    </div>
+    <div class="screens-row">
+      <div class="screen-card">
+        <div class="screen-frame"><img class="screen-shot" src="shots/home.png" alt="MedRecall Home screen with the full tile grid"></div>
+        <div class="screen-label">Home</div>
+        <div class="screen-desc">One glance at what's due, what's upcoming, and quick links to everything else.</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-frame"><img class="screen-shot" src="shots/medications.png" alt="MedRecall Medications screen"></div>
+        <div class="screen-label">Medications</div>
+        <div class="screen-desc">Dose, schedule and a mark-as-taken log at a glance, color-coded per prescription.</div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-frame"><img class="screen-shot" src="shots/medicalid.png" alt="MedRecall Medical ID screen"></div>
+        <div class="screen-label">Medical ID</div>
+        <div class="screen-desc">An emergency card — allergies, conditions and medications — ready without unlocking the rest of the app.</div>
+      </div>
+    </div>
+    <p class="screens-note">Real screens from the current TestFlight build. Names and details shown are placeholder test data.</p>
+  </div>
+</section>
+
+<section class="download" id="download">
+  <div class="wrap">
+    <h2>Track less paperwork. Remember more of what matters.</h2>
+    <p>MedRecall is in iOS beta now, with Android in development. No account, no server, no ads — just your records, on your phone.</p>
+    <div class="download-cta">
+      <a href="#" class="btn btn-primary">Join the TestFlight beta</a>
+      <a href="mailto:asok4fam@gmail.com" class="btn btn-ghost">Ask a question</a>
+    </div>
+    <div class="platform-row">
+      <span><span class="status-dot live"></span>iOS — TestFlight beta open</span>
+      <span><span class="status-dot soon"></span>Android — in development</span>
+    </div>
+  </div>
+</section>
+
 <footer>
-  &copy; 2026 MedRecall. Questions? <a href="mailto:asok4fam@gmail.com">asok4fam@gmail.com</a>
+  <div class="wrap footer-row">
+    <div class="wordmark" style="font-size:1.05rem;">MedRecall<span class="dot">.</span></div>
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+      <a href="data-access.html">Data Access</a>
+      <a href="disclosures.html">Disclosures</a>
+      <a href="mailto:asok4fam@gmail.com">Support</a>
+    </div>
+    <div class="footer-copy">© 2026 MedRecall · medrecallplus.com</div>
+  </div>
 </footer>
-</body>
-</html>
