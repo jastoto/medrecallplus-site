@@ -5,11 +5,11 @@
 <style>
   /* ---------- Tokens ---------- */
   :root {
-    --bg: #F4F8F8;
-    --bg-grad-end: #E2F0EF;
+    --bg: #FBFDFD;
+    --bg-grad-end: #EFF9F8;
     --surface: #FFFFFF;
-    --surface-2: #E9F3F3;
-    --border: #D6E6E5;
+    --surface-2: #F1F8F8;
+    --border: #DCEAEA;
     --text: #132226;
     --text-muted: #55707A;
     --accent: #276F9E;
@@ -23,24 +23,9 @@
     --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0C1A20;
-      --bg-grad-end: #143138;
-      --surface: #12272E;
-      --surface-2: #183036;
-      --border: #274046;
-      --text: #EAF4F4;
-      --text-muted: #9AB6BC;
-      --accent: #6DB6DE;
-      --accent-strong: #8FCBEA;
-      --accent-ink: #0C1A20;
-      --accent2: #34C9B4;
-      --accent2-strong: #59E0CC;
-      --accent2-ink: #0C1A20;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 20px 48px -20px rgba(0,0,0,.55);
-    }
-  }
+  /* This page stays light by default regardless of system dark mode —
+     matching the rest of medrecallplus.com. It only goes dark if the
+     viewer has explicitly chosen dark mode for Claude itself. */
   :root[data-theme="dark"] {
     --bg: #0C1A20;
     --bg-grad-end: #143138;
@@ -111,6 +96,8 @@
     font-weight: 500;
   }
   .nav-links a:hover { color: var(--text); }
+  .nav-links a.btn-primary,
+  .nav-links a.btn-primary:hover { color: #000000; }
   .btn {
     display: inline-flex;
     align-items: center;
