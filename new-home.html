@@ -5,56 +5,56 @@
 <style>
   /* ---------- Tokens ---------- */
   :root {
-    --bg: #F7F4F2;
-    --bg-grad-end: #EFE9F5;
+    --bg: #F4F8F8;
+    --bg-grad-end: #E2F0EF;
     --surface: #FFFFFF;
-    --surface-2: #F1ECF6;
-    --border: #E2D9EA;
-    --text: #241E30;
-    --text-muted: #6E6480;
-    --accent: #6952C4;
-    --accent-strong: #5A3FB8;
+    --surface-2: #E9F3F3;
+    --border: #D6E6E5;
+    --text: #132226;
+    --text-muted: #55707A;
+    --accent: #276F9E;
+    --accent-strong: #1C5680;
     --accent-ink: #FFFFFF;
-    --accent2: #C74E17;
-    --accent2-strong: #B84512;
+    --accent2: #12897C;
+    --accent2-strong: #0D6C62;
     --accent2-ink: #FFFFFF;
-    --shadow: 0 1px 2px rgba(36,30,48,.06), 0 12px 32px -16px rgba(36,30,48,.18);
+    --shadow: 0 1px 2px rgba(19,34,38,.06), 0 12px 32px -16px rgba(19,34,38,.18);
     --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
     --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #17131F;
-      --bg-grad-end: #2B2040;
-      --surface: #221C2C;
-      --surface-2: #2A2335;
-      --border: #3B3348;
-      --text: #F4F1F7;
-      --text-muted: #B0A6C0;
-      --accent: #A793F5;
-      --accent-strong: #BFAEFF;
-      --accent-ink: #1A1424;
-      --accent2: #EF6731;
-      --accent2-strong: #FF8657;
-      --accent2-ink: #1A1424;
+      --bg: #0C1A20;
+      --bg-grad-end: #143138;
+      --surface: #12272E;
+      --surface-2: #183036;
+      --border: #274046;
+      --text: #EAF4F4;
+      --text-muted: #9AB6BC;
+      --accent: #6DB6DE;
+      --accent-strong: #8FCBEA;
+      --accent-ink: #0C1A20;
+      --accent2: #34C9B4;
+      --accent2-strong: #59E0CC;
+      --accent2-ink: #0C1A20;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 20px 48px -20px rgba(0,0,0,.55);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #17131F;
-    --bg-grad-end: #2B2040;
-    --surface: #221C2C;
-    --surface-2: #2A2335;
-    --border: #3B3348;
-    --text: #F4F1F7;
-    --text-muted: #B0A6C0;
-    --accent: #A793F5;
-    --accent-strong: #BFAEFF;
-    --accent-ink: #1A1424;
-    --accent2: #EF6731;
-    --accent2-strong: #FF8657;
-    --accent2-ink: #1A1424;
+    --bg: #0C1A20;
+    --bg-grad-end: #143138;
+    --surface: #12272E;
+    --surface-2: #183036;
+    --border: #274046;
+    --text: #EAF4F4;
+    --text-muted: #9AB6BC;
+    --accent: #6DB6DE;
+    --accent-strong: #8FCBEA;
+    --accent-ink: #0C1A20;
+    --accent2: #34C9B4;
+    --accent2-strong: #59E0CC;
+    --accent2-ink: #0C1A20;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 20px 48px -20px rgba(0,0,0,.55);
   }
 
@@ -65,6 +65,7 @@
     color: var(--text);
     font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   img { max-width: 100%; }
   h1, h2, h3 { font-family: var(--serif); font-weight: 400; text-wrap: balance; margin: 0; }
@@ -179,14 +180,33 @@
 
   /* ---------- Phone illustration ---------- */
   .phone-stage { display: flex; justify-content: center; }
+  .phone-rig { position: relative; }
+  .stetho {
+    position: absolute;
+    top: -34px; left: 50%;
+    transform: translateX(-72%);
+    width: 235px; height: auto;
+    z-index: 0;
+    color: var(--accent2);
+    opacity: .8;
+    pointer-events: none;
+  }
+  .pill-cluster {
+    position: absolute;
+    bottom: -18px; right: -22px;
+    width: 92px; height: auto;
+    z-index: 2;
+    filter: drop-shadow(0 8px 14px rgba(12,26,32,.25));
+  }
   .phone {
     width: min(300px, 100%);
     aspect-ratio: 9 / 18.5;
     border-radius: 42px;
     padding: 12px;
-    background: linear-gradient(160deg, #2E2245, #161020 78%);
+    background: linear-gradient(160deg, #1B3B44, #0A161B 78%);
     box-shadow: var(--shadow);
     position: relative;
+    z-index: 1;
   }
   .phone::after {
     content: "";
@@ -198,7 +218,7 @@
   .phone-screen {
     height: 100%;
     border-radius: 30px;
-    background: linear-gradient(200deg, #2B2140 0%, #17131C 100%);
+    background: linear-gradient(200deg, #163640 0%, #0B171B 100%);
     padding: 30px 16px 16px;
     display: flex;
     flex-direction: column;
@@ -229,6 +249,7 @@
     padding: 0 10px;
   }
   .phone-caption { text-align: center; font-size: .78rem; color: var(--text-muted); margin-top: 14px; font-style: italic; font-family: var(--serif); }
+  .ekg-divider { color: var(--border); opacity: .8; margin-top: clamp(28px, 5vw, 52px); overflow: hidden; }
 
   /* ---------- Trust strip ---------- */
   .trust { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
@@ -305,7 +326,7 @@
   }
   .screen-frame {
     border-radius: 12px;
-    background: linear-gradient(165deg, #2E2245, #16101C 85%);
+    background: linear-gradient(165deg, #1B3B44, #0A161B 85%);
     padding: 16px;
     aspect-ratio: 4/5;
     display: flex;
@@ -363,6 +384,8 @@
   @media (max-width: 480px) {
     .feature-grid { grid-template-columns: 1fr; }
     .feature.spotlight { grid-column: span 1; }
+    .stetho { width: 170px; transform: translateX(-62%); top: -20px; }
+    .pill-cluster { width: 70px; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -397,29 +420,55 @@
     </div>
     <div class="phone-stage reveal">
       <div>
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="phone-title">Medications</div>
-            <div class="phone-card">
-              <span class="phone-dot" style="background:#EF6731"></span>
-              <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-            </div>
-            <div class="phone-card">
-              <span class="phone-dot" style="background:#A793F5"></span>
-              <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-            </div>
-            <div class="phone-card">
-              <span class="phone-dot" style="background:#5FC7A8"></span>
-              <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
-            </div>
-            <div class="phone-pulse">
-              <svg width="100%" height="20" viewBox="0 0 220 20" fill="none"><path d="M0 10 H60 L72 10 L80 2 L90 18 L100 10 L110 10 L118 4 L126 16 L134 10 H220" stroke="#A793F5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <div class="phone-rig">
+          <svg class="stetho" viewBox="0 0 200 260" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="55" cy="16" r="10" fill="currentColor" stroke="none"/>
+            <circle cx="145" cy="16" r="10" fill="currentColor" stroke="none"/>
+            <path d="M55,26 C48,55 55,78 82,92 C96,100 102,108 102,124"/>
+            <path d="M145,26 C152,55 145,78 118,92 C104,100 98,108 98,124"/>
+            <path d="M100,124 L100,168"/>
+            <path d="M100,168 C100,182 90,190 78,190 C64,190 54,180 54,166 L54,150"/>
+            <circle cx="54" cy="146" r="9"/>
+            <circle cx="78" cy="222" r="34" stroke-width="7"/>
+            <circle cx="78" cy="222" r="14" stroke-width="4"/>
+          </svg>
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-title">Medications</div>
+              <div class="phone-card">
+                <span class="phone-dot" style="background:#34C9B4"></span>
+                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
+              </div>
+              <div class="phone-card">
+                <span class="phone-dot" style="background:#6DB6DE"></span>
+                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
+              </div>
+              <div class="phone-card">
+                <span class="phone-dot" style="background:#E8B84B"></span>
+                <div class="phone-lines"><div class="phone-line"></div><div class="phone-line short"></div></div>
+              </div>
+              <div class="phone-pulse">
+                <svg width="100%" height="20" viewBox="0 0 220 20" fill="none"><path d="M0 10 H60 L72 10 L80 2 L90 18 L100 10 L110 10 L118 4 L126 16 L134 10 H220" stroke="#34C9B4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+              </div>
             </div>
           </div>
+          <svg class="pill-cluster" viewBox="0 0 100 60" fill="none">
+            <g transform="rotate(-18 30 26)">
+              <rect x="6" y="14" width="48" height="24" rx="12" fill="var(--accent2)"/>
+              <path d="M30 14 H42 a12 12 0 0 1 0 24 H30 Z" fill="var(--accent)"/>
+            </g>
+            <circle cx="76" cy="18" r="11" fill="var(--accent)"/>
+            <circle cx="86" cy="41" r="9" fill="var(--accent2-strong)"/>
+          </svg>
         </div>
         <p class="phone-caption">Illustrative — actual screens shown in "Inside the app"</p>
       </div>
     </div>
+  </div>
+  <div class="ekg-divider" aria-hidden="true">
+    <svg preserveAspectRatio="none" viewBox="0 0 800 40" width="100%" height="40">
+      <path d="M0,20 H140 L158,20 L168,4 L180,36 L192,20 L210,20 L222,10 L234,30 L246,20 H800" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </header>
 
@@ -519,29 +568,29 @@
     <div class="screens-row">
       <div class="screen-card">
         <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#EF6731"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#A793F5"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#5FC7A8"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#E7C25A"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#6DB6DE"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#E8B84B"></span><span class="ln"></span><span class="ln s"></span></div>
         </div>
         <div class="screen-label">Home</div>
         <div class="screen-desc">One glance at what's due, what's upcoming, and quick links to everything else.</div>
       </div>
       <div class="screen-card">
         <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#A793F5"></span><span class="ln"></span></div>
-          <div class="row" style="opacity:.7"><span class="sw" style="background:#A793F5"></span><span class="ln s"></span></div>
-          <div class="row" style="opacity:.5"><span class="sw" style="background:#A793F5"></span><span class="ln s"></span></div>
-          <div class="row" style="opacity:.35"><span class="sw" style="background:#A793F5"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#6DB6DE"></span><span class="ln"></span></div>
+          <div class="row" style="opacity:.7"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
+          <div class="row" style="opacity:.5"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
+          <div class="row" style="opacity:.35"><span class="sw" style="background:#6DB6DE"></span><span class="ln s"></span></div>
         </div>
         <div class="screen-label">Doctors</div>
         <div class="screen-desc">Every provider, their upcoming appointments, and the notes tied to each visit.</div>
       </div>
       <div class="screen-card">
         <div class="screen-frame">
-          <div class="row"><span class="sw" style="background:#EF6731"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#EF6731"></span><span class="ln"></span><span class="ln s"></span></div>
-          <div class="row"><span class="sw" style="background:#5FC7A8"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#34C9B4"></span><span class="ln"></span><span class="ln s"></span></div>
+          <div class="row"><span class="sw" style="background:#E8B84B"></span><span class="ln"></span><span class="ln s"></span></div>
         </div>
         <div class="screen-label">Medications</div>
         <div class="screen-desc">Dose, schedule and a mark-as-taken log at a glance, color-coded per prescription.</div>
