@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.asok.medrecall",
+      "sha256_cert_fingerprints": [
+        "B7:A3:0C:C2:6E:85:CA:1B:A8:C8:BE:D3:F4:37:B6:7B:34:89:44:75:B6:01:D6:FA:F9:61:6C:EF:78:14:6C:2A",
+        "ED:DD:E1:76:C3:F2:F3:B0:A3:89:69:50:09:BC:9F:38:EE:38:70:BD:7B:74:0F:BC:40:0D:B0:37:2B:20:8C:19"
+      ]
+    }
+  }
+]
