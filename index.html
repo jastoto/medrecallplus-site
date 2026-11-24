@@ -288,8 +288,8 @@
   .screens-row {
     margin-top: 46px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
   }
   .screen-card {
     background: var(--surface-2);
@@ -548,7 +548,7 @@
       <div class="feature">
         <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="6" width="17" height="13" rx="2.5"/><path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6"/><path d="M8.5 13.2l2.1 2.1 4.4-4.6"/></svg>
         <h3>Medical ID</h3>
-        <p>A single emergency card — allergies, conditions and medications — ready to show without unlocking the rest of the app.</p>
+        <p>A single emergency card — allergies, conditions and medications — ready to show in one tap once your phone is unlocked.</p>
       </div>
       <div class="feature">
         <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h9"/><circle cx="19" cy="18" r="2"/></svg>
@@ -578,9 +578,14 @@
         <div class="screen-desc">Dose, schedule and a mark-as-taken log at a glance, color-coded per prescription.</div>
       </div>
       <div class="screen-card">
+        <div class="screen-frame"><img class="screen-shot" src="shots/doctors.png" alt="MedRecall Doctors screen listing doctors by specialty"></div>
+        <div class="screen-label">Doctors</div>
+        <div class="screen-desc">Every doctor in one place, organized by specialty.</div>
+      </div>
+      <div class="screen-card">
         <div class="screen-frame"><img class="screen-shot" src="shots/medicalid.png" alt="MedRecall Medical ID screen"></div>
         <div class="screen-label">Medical ID</div>
-        <div class="screen-desc">An emergency card — allergies, conditions and medications — ready without unlocking the rest of the app.</div>
+        <div class="screen-desc">An emergency card — allergies, conditions and medications — one tap away once your phone is unlocked.</div>
       </div>
     </div>
     <p class="screens-note">Real screens from the current TestFlight build. Names and details shown are placeholder test data.</p>
@@ -597,6 +602,7 @@
     </div>
     <div class="platform-row">
       <span><span class="status-dot live"></span>iOS — TestFlight beta open</span>
+      <span><span class="status-dot soon"></span>Android — in development</span>
     </div>
   </div>
 </section>
@@ -611,7 +617,7 @@
       <a href="disclosures.html">Disclosures</a>
       <a href="support.html">Support</a>
     </div>
-    <div class="footer-copy">© 2026 MedRecall · medrecallplus.com</div>
+    <div class="footer-copy">© 2026 VezaMed LLC · medrecallplus.com</div>
   </div>
 </footer>
 
