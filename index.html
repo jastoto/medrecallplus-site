@@ -359,6 +359,56 @@
     .reveal { animation: rise .6s ease both; }
   }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- TestFlight beta request form ---------- */
+  .beta-dialog {
+    width: min(560px, calc(100% - 32px));
+    max-height: calc(100vh - 48px);
+    padding: 0; border: 1px solid var(--border); border-radius: 18px;
+    background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+    font-family: var(--sans);
+  }
+  .beta-dialog::backdrop { background: rgba(19,34,38,.55); }
+  .beta-inner { padding: 28px 28px 24px; overflow-y: auto; max-height: calc(100vh - 48px); }
+  .beta-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .beta-head h2 { font-family: var(--serif); font-weight: 400; font-size: 1.9rem; margin: 0; line-height: 1.1; }
+  .beta-close {
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; flex: none;
+  }
+  .beta-close:hover { border-color: var(--accent); }
+  .beta-sub { color: var(--text-muted); margin: 8px 0 20px; font-size: .95rem; }
+  .beta-form .field { margin-bottom: 16px; }
+  .beta-form .lbl { display: block; font-weight: 500; font-size: .92rem; margin-bottom: 6px; }
+  .beta-form .req { color: var(--accent); }
+  .beta-form input[type=text], .beta-form input[type=email], .beta-form select, .beta-form textarea {
+    width: 100%; padding: 11px 12px; font: inherit; font-size: 16px; /* 16px stops iPhone auto-zoom */
+    color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  }
+  .beta-form textarea { min-height: 90px; resize: vertical; }
+  .beta-form input:focus, .beta-form select:focus, .beta-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .beta-form .hint { color: var(--text-muted); font-size: .82rem; margin-top: 5px; }
+  .beta-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .beta-form .radios { display: flex; gap: 20px; }
+  .beta-form .radios label, .beta-form .check { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; cursor: pointer; }
+  .beta-form .check { margin-bottom: 12px; }
+  .beta-form .check input, .beta-form .radios input { width: 18px; height: 18px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+  .beta-form .warn { background: var(--bg); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 6px; font-size: .84rem; color: var(--text-muted); margin-top: 6px; }
+  .beta-form .botcheck { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .beta-actions { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+  .beta-actions .btn { cursor: pointer; font: inherit; }
+  .beta-status { margin-top: 14px; font-size: .92rem; min-height: 1.2em; }
+  .beta-status.err { color: #B3261E; }
+  .beta-done { text-align: center; padding: 24px 0 8px; }
+  .beta-done h3 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; margin: 0 0 8px; }
+  .beta-done p { color: var(--text-muted); margin: 0 0 20px; }
+  /* Phones: the form takes over the full screen like an app screen */
+  @media (max-width: 640px) {
+    .beta-dialog { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; border-radius: 0; border: 0; }
+    .beta-inner { max-height: 100%; height: 100%; padding: 20px 18px calc(24px + env(safe-area-inset-bottom)); }
+    .beta-form .row2 { grid-template-columns: 1fr; gap: 0; }
+    .beta-actions .btn { flex: 1; text-align: center; }
+  }
 </style>
 </head>
 <body>
@@ -382,7 +432,7 @@
       <h1>Your medical history, <em>kept where it belongs</em> — on your phone.</h1>
       <p class="hero-sub">MedRecall tracks your medications, doctors, conditions and vitals, and can pull in records from your hospital's patient portal — without ever sending your records to a server. There isn't one.</p>
       <div class="hero-cta">
-        <a href="#download" class="btn btn-primary">Get the TestFlight beta</a>
+        <a href="#beta-request" class="btn btn-primary js-beta-open">Get the TestFlight beta</a>
         <a href="#privacy" class="btn btn-ghost">How the privacy works</a>
       </div>
       <p class="hero-note">// on-device storage · Keychain-secured tokens · no account required</p>
@@ -542,7 +592,7 @@
     <h2>Track less paperwork. Remember more of what matters.</h2>
     <p>MedRecall is in iOS beta now. No account, no server, no ads — just your records, on your phone.</p>
     <div class="download-cta">
-      <a href="#" class="btn btn-primary">Join the TestFlight beta</a>
+      <a href="#beta-request" class="btn btn-primary js-beta-open">Join the TestFlight beta</a>
       <a href="mailto:support@medrecallplus.com" class="btn btn-ghost">Ask a question</a>
     </div>
     <div class="platform-row">
@@ -564,5 +614,181 @@
     <div class="footer-copy">© 2026 MedRecall · medrecallplus.com</div>
   </div>
 </footer>
+
+<!-- ---------- TestFlight beta request form ---------- -->
+<dialog class="beta-dialog" id="beta-request" aria-labelledby="beta-title">
+  <div class="beta-inner">
+    <div class="beta-head">
+      <h2 id="beta-title">Request the TestFlight beta</h2>
+      <button type="button" class="beta-close js-beta-close" aria-label="Close">&times;</button>
+    </div>
+
+    <div id="beta-form-wrap">
+      <p class="beta-sub">Tell us a little about your iPhone and we'll email you a TestFlight invite. MedRecall+ requires iOS 26 or later.</p>
+      <form class="beta-form" id="beta-form" novalidate>
+        <!-- Web3Forms delivers submissions to support@medrecallplus.com.
+             Replace the value below with the Access Key from web3forms.com. -->
+        <input type="hidden" name="access_key" value=0507bcef-dbb6-4856-9e6d-df31128a8dd8>
+        <input type="hidden" name="subject" value="New TestFlight beta request — MedRecall+">
+        <input type="hidden" name="from_name" value="medrecallplus.com beta form">
+        <!-- Spam trap: hidden from people, bots fill it in -->
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="field">
+          <label class="lbl" for="bf-name">Full name <span class="req">*</span></label>
+          <input type="text" id="bf-name" name="Full name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label class="lbl" for="bf-email">Email <span class="req">*</span></label>
+          <input type="email" id="bf-email" name="email" autocomplete="email" required>
+          <div class="hint">Your TestFlight invite will be sent here.</div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label class="lbl" for="bf-model">iPhone model <span class="req">*</span></label>
+            <select id="bf-model" name="iPhone model" required>
+              <option value="">Choose…</option>
+            <option>iPhone 17 Pro / 17 Pro Max</option>
+            <option>iPhone Air</option>
+            <option>iPhone 17</option>
+            <option>iPhone 16 Pro / 16 Pro Max</option>
+            <option>iPhone 16 / 16 Plus</option>
+            <option>iPhone 16e</option>
+            <option>iPhone 15 Pro / 15 Pro Max</option>
+            <option>iPhone 15 / 15 Plus</option>
+            <option>iPhone 14 Pro / 14 Pro Max</option>
+            <option>iPhone 14 / 14 Plus</option>
+            <option>iPhone 13 Pro / 13 Pro Max</option>
+            <option>iPhone 13 / 13 mini</option>
+            <option>iPhone 12 Pro / 12 Pro Max</option>
+            <option>iPhone 12 / 12 mini</option>
+            <option>iPhone 11 Pro / 11 Pro Max</option>
+            <option>iPhone 11</option>
+            <option>iPhone SE (2nd or 3rd generation)</option>
+            <option>Other / not listed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lbl" for="bf-ios">iOS version <span class="req">*</span></label>
+            <select id="bf-ios" name="iOS version" required>
+              <option value="">Choose…</option>
+              <option>iOS 27</option>
+              <option>iOS 26</option>
+              <option>Older than iOS 26</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+        <div class="hint" style="margin:-8px 0 16px;">Find both on your iPhone in Settings → General → About.</div>
+
+        <div class="field">
+          <span class="lbl">Do you have a Medicare.gov account? <span class="req">*</span></span>
+          <div class="radios" role="radiogroup">
+            <label><input type="radio" name="Has Medicare.gov account" value="Yes" required> Yes</label>
+            <label><input type="radio" name="Has Medicare.gov account" value="No"> No</label>
+          </div>
+          <div class="hint">Needed to test importing your Medicare claims. You can join the beta either way.</div>
+        </div>
+
+        <div class="field">
+          <label class="lbl" for="bf-msg">Anything else? (optional)</label>
+          <textarea id="bf-msg" name="Message"></textarea>
+          <div class="warn">Please don't include any health information here. MedRecall+ is built so we never see your health data, and that includes this form.</div>
+        </div>
+
+        <label class="check"><input type="checkbox" name="Notify about Android" value="Yes"> Let me know when MedRecall+ is available on Android</label>
+        <label class="check"><input type="checkbox" id="bf-age" name="Confirmed 18 or older" value="Yes" required> <span>I confirm I am 18 years of age or older. <span class="req">*</span></span></label>
+        <label class="check"><input type="checkbox" id="bf-beta" name="Acknowledged beta / not medical advice" value="Yes" required> <span>I understand this is beta software that may contain bugs, and that MedRecall+ does not provide medical advice. <span class="req">*</span></span></label>
+
+        <div class="beta-actions">
+          <button type="submit" class="btn btn-primary" id="beta-submit">Submit request</button>
+          <button type="button" class="btn btn-ghost js-beta-close">Cancel</button>
+        </div>
+        <div class="beta-status" id="beta-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="beta-done" id="beta-done" hidden>
+      <h3>Thanks — request received.</h3>
+      <p>We'll review it and email your TestFlight invite. Watch for a message from Apple TestFlight.</p>
+      <button type="button" class="btn btn-primary js-beta-close">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('beta-request');
+  var form = document.getElementById('beta-form');
+  var statusEl = document.getElementById('beta-status');
+  var submitBtn = document.getElementById('beta-submit');
+  var formWrap = document.getElementById('beta-form-wrap');
+  var done = document.getElementById('beta-done');
+  if (!dlg || !form) return;
+  var canDialog = typeof dlg.showModal === 'function';
+
+  function openForm(e) {
+    if (e) e.preventDefault();
+    if (!canDialog) { window.location.href = 'mailto:support@medrecallplus.com?subject=TestFlight%20beta%20request'; return; }
+    formWrap.hidden = false; done.hidden = true;
+    statusEl.textContent = ''; statusEl.className = 'beta-status';
+    dlg.showModal();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeForm() { dlg.close(); }
+  dlg.addEventListener('close', function () {
+    document.body.style.overflow = '';
+    if (location.hash === '#beta-request') history.replaceState(null, '', location.pathname + location.search);
+  });
+  // Clicking the dimmed area outside the box closes it (computer only; on phones it fills the screen)
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) closeForm(); });
+
+  document.querySelectorAll('.js-beta-open').forEach(function (a) { a.addEventListener('click', openForm); });
+  document.querySelectorAll('.js-beta-close').forEach(function (b) { b.addEventListener('click', closeForm); });
+  if (location.hash === '#beta-request') openForm();
+
+  function showError(msg, el) {
+    statusEl.textContent = msg; statusEl.className = 'beta-status err';
+    if (el) el.focus();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.textContent = ''; statusEl.className = 'beta-status';
+    var name = form.querySelector('#bf-name'), email = form.querySelector('#bf-email');
+    var model = form.querySelector('#bf-model'), ios = form.querySelector('#bf-ios');
+    if (!name.value.trim()) return showError('Please enter your full name.', name);
+    if (!email.value.trim() || !email.checkValidity()) return showError('Please enter a valid email address.', email);
+    if (!model.value) return showError('Please choose your iPhone model.', model);
+    if (!ios.value) return showError('Please choose your iOS version.', ios);
+    if (ios.value === 'Older than iOS 26') return showError('MedRecall+ requires iOS 26 or later. Please update your iPhone in Settings → General → Software Update, then try again.', ios);
+    if (!form.querySelector('input[name="Has Medicare.gov account"]:checked')) return showError('Please answer the Medicare.gov account question.');
+    if (!form.querySelector('#bf-age').checked) return showError('You must be 18 or older to join the beta.', form.querySelector('#bf-age'));
+    if (!form.querySelector('#bf-beta').checked) return showError('Please confirm you understand this is beta software.', form.querySelector('#bf-beta'));
+
+    var key = form.querySelector('input[name="access_key"]').value;
+    if (!key || key.indexOf('YOUR_') === 0) return showError('The form is not connected yet. Please email support@medrecallplus.com to request the beta.');
+
+    submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+    .then(function (r) { return r.json().catch(function () { return { success: false }; }); })
+    .then(function (data) {
+      if (data && data.success) {
+        form.reset(); formWrap.hidden = true; done.hidden = false;
+      } else {
+        showError('Something went wrong sending your request. Please try again, or email support@medrecallplus.com.');
+      }
+    })
+    .catch(function () {
+      showError('Could not connect. Check your internet connection and try again, or email support@medrecallplus.com.');
+    })
+    .finally(function () { submitBtn.disabled = false; submitBtn.textContent = 'Submit request'; });
+  });
+})();
+</script>
 </body>
 </html>
