@@ -43,6 +43,30 @@ a.button {
   display: inline-block; background: #922b21; color: #fff; text-decoration: none;
   padding: .6rem 1.1rem; border-radius: 10px; font-weight: 600; margin-top: .5rem;
 }
+
+/* Ask a question form */
+.beta-form .field { margin-bottom: 1rem; }
+.beta-form .lbl { display: block; font-weight: 600; font-size: .95rem; margin-bottom: .35rem; }
+.beta-form .req { color: #c0392b; }
+.beta-form input[type=text], .beta-form input[type=email], .beta-form select, .beta-form textarea {
+  width: 100%; padding: .65rem .75rem; font: inherit; font-size: 16px; color: #2a2320;
+  background: #faf7f5; border: 1px solid #e6d6d1; border-radius: 10px;
+}
+.beta-form textarea { min-height: 110px; resize: vertical; }
+.beta-form input:focus, .beta-form select:focus, .beta-form textarea:focus { outline: 2px solid #922b21; outline-offset: 1px; }
+.beta-form .hint { color: #7a6f6a; font-size: .85rem; margin-top: .3rem; }
+.beta-form .warn { background: #faf7f5; border-left: 3px solid #c0392b; padding: .5rem .75rem; border-radius: 6px; font-size: .86rem; color: #5e5450; margin-top: .4rem; }
+.beta-form .botcheck { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.beta-actions { margin-top: .5rem; }
+.btn.btn-primary { background: #922b21; color: #fff; border: 0; padding: .7rem 1.3rem; border-radius: 10px; font: inherit; font-weight: 600; cursor: pointer; }
+.btn.btn-primary:hover { background: #7a241b; }
+.btn.btn-primary:disabled { opacity: .7; cursor: default; }
+.btn.btn-ghost { background: transparent; color: #922b21; border: 1px solid #e6d6d1; padding: .6rem 1.1rem; border-radius: 10px; font: inherit; font-weight: 600; cursor: pointer; }
+.cf-status { margin-top: .8rem; font-size: .92rem; min-height: 1.2em; }
+.cf-status.err { color: #B3261E; }
+.cf-done { text-align: center; padding: 1rem 0 .5rem; }
+.cf-done h3 { margin: 0 0 .4rem; color: #922b21; }
+@media (max-width: 640px) { .btn.btn-primary { width: 100%; } }
 </style>
 </head>
 <body>
@@ -56,11 +80,51 @@ a.button {
 <main>
 <p class="meta">MedRecall+ is currently in beta testing, so features may change.</p>
 
-<div class="card">
-  <h2 style="margin-top:0">Contact us</h2>
-  <p>Email <a href="mailto:support@medrecallplus.com">support@medrecallplus.com</a> and we will reply as soon as we can.</p>
-  <p>It helps if you tell us your phone model, what you were doing, and what happened. <strong>Please do not include personal health information in your email.</strong></p>
- <a class="button" href="mailto:support@medrecallplus.com?subject=MedRecall%2B%20support">Email support</a>
+<div class="card cf-wrap" id="contact">
+  <h2 style="margin-top:0">Ask a question</h2>
+  <p>Send us a question and we'll reply by email as soon as we can.</p>
+  <form class="beta-form js-contact-form" novalidate>
+        <input type="hidden" name="access_key" value="0507bcef-dbb6-4856-9e6d-df31128a8dd8">
+        <input type="hidden" name="subject" value="MedRecall+ question">
+        <input type="hidden" name="from_name" value="medrecallplus.com question form">
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="field">
+          <label class="lbl" for="cf-name">Name <span class="req">*</span></label>
+          <input type="text" id="cf-name" name="Name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-email">Email <span class="req">*</span></label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+          <div class="hint">We'll reply to this address.</div>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-topic">Topic <span class="req">*</span></label>
+          <select id="cf-topic" name="Topic" required>
+            <option value="">Choose…</option>
+            <option>General question</option>
+            <option>Beta / TestFlight help</option>
+            <option>Bug report</option>
+            <option>Privacy &amp; data</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-msg">Your question <span class="req">*</span></label>
+          <textarea id="cf-msg" name="Message" required></textarea>
+          <div class="hint">For a bug, tell us your phone model, what you were doing, and what happened.</div>
+          <div class="warn">Please don't include any health information here. MedRecall+ is built so we never see your health data, and that includes this form.</div>
+        </div>
+        <div class="beta-actions">
+          <button type="submit" class="btn btn-primary">Send question</button>
+        </div>
+        <div class="cf-status" role="status" aria-live="polite"></div>
+        <p class="hint" style="margin-top:12px;">Or email us directly at <a href="mailto:support@medrecallplus.com">support@medrecallplus.com</a></p>
+      </form>
+  <div class="beta-done cf-done" hidden>
+        <h3>Thanks — question sent.</h3>
+        <p>We'll reply by email as soon as we can.</p>
+        <button type="button" class="btn btn-ghost cf-again">Send another question</button>
+      </div>
 </div>
 
 <h2>Where is my information stored?</h2>
@@ -90,5 +154,6 @@ a.button {
 <footer>
  &copy; 2026 MedRecall+. Questions? <a href="mailto:support@medrecallplus.com">support@medrecallplus.com</a>
 </footer>
+<script src="contact-form.js"></script>
 </body>
 </html>

@@ -409,6 +409,9 @@
     .beta-form .row2 { grid-template-columns: 1fr; gap: 0; }
     .beta-actions .btn { flex: 1; text-align: center; }
   }
+
+  .cf-status { margin-top: 14px; font-size: .92rem; min-height: 1.2em; }
+  .cf-status.err { color: #B3261E; }
 </style>
 </head>
 <body>
@@ -598,7 +601,7 @@
     <p>MedRecall is in iOS beta now. No account, no server, no ads — just your records, on your phone.</p>
     <div class="download-cta">
       <a href="#beta-request" class="btn btn-primary js-beta-open">Join the TestFlight beta</a>
-      <a href="mailto:support@medrecallplus.com" class="btn btn-ghost">Ask a question</a>
+      <a href="#ask-question" class="btn btn-ghost js-ask-open">Ask a question</a>
     </div>
     <div class="platform-row">
       <span><span class="status-dot live"></span>iOS — TestFlight beta open</span>
@@ -794,6 +797,84 @@
     })
     .finally(function () { submitBtn.disabled = false; submitBtn.textContent = 'Submit request'; });
   });
+})();
+</script>
+
+<!-- ---------- Ask a question form ---------- -->
+<dialog class="beta-dialog" id="ask-question" aria-labelledby="ask-title">
+  <div class="beta-inner">
+    <div class="beta-head">
+      <h2 id="ask-title">Ask a question</h2>
+      <button type="button" class="beta-close js-ask-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="cf-wrap">
+      <p class="beta-sub">Send us a question and we'll reply by email.</p>
+      <form class="beta-form js-contact-form" novalidate>
+        <input type="hidden" name="access_key" value="0507bcef-dbb6-4856-9e6d-df31128a8dd8">
+        <input type="hidden" name="subject" value="MedRecall+ question">
+        <input type="hidden" name="from_name" value="medrecallplus.com question form">
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="field">
+          <label class="lbl" for="cf-name">Name <span class="req">*</span></label>
+          <input type="text" id="cf-name" name="Name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-email">Email <span class="req">*</span></label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" required>
+          <div class="hint">We'll reply to this address.</div>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-topic">Topic <span class="req">*</span></label>
+          <select id="cf-topic" name="Topic" required>
+            <option value="">Choose…</option>
+            <option>General question</option>
+            <option>Beta / TestFlight help</option>
+            <option>Bug report</option>
+            <option>Privacy &amp; data</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="cf-msg">Your question <span class="req">*</span></label>
+          <textarea id="cf-msg" name="Message" required></textarea>
+          <div class="hint">For a bug, tell us your phone model, what you were doing, and what happened.</div>
+          <div class="warn">Please don't include any health information here. MedRecall+ is built so we never see your health data, and that includes this form.</div>
+        </div>
+        <div class="beta-actions">
+          <button type="submit" class="btn btn-primary">Send question</button>
+          <button type="button" class="btn btn-ghost js-ask-close">Cancel</button>
+        </div>
+        <div class="cf-status" role="status" aria-live="polite"></div>
+        <p class="hint" style="margin-top:12px;">Or email us directly at <a href="mailto:support@medrecallplus.com">support@medrecallplus.com</a></p>
+      </form>
+      <div class="beta-done cf-done" hidden>
+        <h3>Thanks — question sent.</h3>
+        <p>We'll reply by email as soon as we can.</p>
+        <button type="button" class="btn btn-ghost cf-again">Send another question</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+<script src="contact-form.js"></script>
+<script>
+(function () {
+  var dlg = document.getElementById('ask-question');
+  if (!dlg) return;
+  function open(e) {
+    if (typeof dlg.showModal !== 'function') { window.location.href = 'support.html#contact'; return; }
+    e.preventDefault();
+    var f = dlg.querySelector('form'), d = dlg.querySelector('.cf-done');
+    f.hidden = false; d.hidden = true;
+    dlg.showModal(); document.body.style.overflow = 'hidden';
+  }
+  dlg.addEventListener('close', function () {
+    document.body.style.overflow = '';
+    if (location.hash === '#ask-question') history.replaceState(null, '', location.pathname + location.search);
+  });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  document.querySelectorAll('.js-ask-open').forEach(function (a) { a.addEventListener('click', open); });
+  dlg.querySelectorAll('.js-ask-close').forEach(function (b) { b.addEventListener('click', function () { dlg.close(); }); });
+  if (location.hash === '#ask-question') open({ preventDefault: function () {} });
 })();
 </script>
 </body>
